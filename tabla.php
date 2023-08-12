@@ -4,6 +4,7 @@ $daba = new database();
 $con = $daba ->conectar();
 session_start();
 
+$fecha=date(Y-d-m);
 ?>
 
 <?php
@@ -11,9 +12,6 @@ session_start();
     $vali->execute();
     $validar=$vali->fetchAll();
 
-    $val=$validar['fecha_vac'];
-    
-    $s=strtotime($valor);
 ?>
 
 <!DOCTYPE html>
@@ -62,6 +60,19 @@ session_start();
                 <td><?= $usu['vacuna'] ?></td>
                 <td><?= $usu['fecha_vac'] ?></td>
                 <td><?= $usu['exp_vac'] ?></td>
+                <?php
+                    if($fecha > $usu['exp_vac']){
+                    ?>    
+                        <td style="background-color=red;"></td>
+
+
+                    <?php    
+                    }else{
+                        ?>
+                        <td style="background-color=green;"></td>
+                    <?php    
+                    }
+                ?>
 
                 
                 <!--con este metodo GET vamos a poder ver la informacion que estamos enviando-->

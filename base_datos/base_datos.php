@@ -3,7 +3,7 @@ class Database{
     private $hostname = "localhost";
     private $database = "vacuna";
     private $username = "root";
-    private $password = "";
+    private $password = "1234";
     private $charset = "utf8";
     function conectar(){
         try{
