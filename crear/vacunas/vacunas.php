@@ -4,6 +4,7 @@ $daba = new database();
 $con = $daba ->conectar();
 session_start();
 
+
 $fecha=date("Y-m-d");
 
 $mes = strtotime("3 months");
@@ -16,11 +17,11 @@ $ff = date("Y-d-m", $mes);
     $consultaa->execute();
     $conn=$consultaa->fetch();
 
-    $con_enfer=$con->prepare("SELECT * FROM enfermeros");
+    $con_enfer=$con->prepare("SELECT * FROM enfermeros WHERE rol = 2");
     $con_enfer->execute();
     $con_e=$con_enfer->fetch();
 
-    $con1_enfer=$con->prepare("SELECT * FROM enfermeros");
+    $con1_enfer=$con->prepare("SELECT * FROM vacunas");
     $con1_enfer->execute();
     $con1_e=$con1_enfer->fetch();
 ?>
@@ -45,9 +46,13 @@ if ((isset($_POST["boton"])) && ($_POST["boton"] == "fo")) {
 
     } else if($validar){
 
-        $actu=$con->prepare("UPDATE mascotas SET vacuna = '$vacuna', enfermero = '$enfermero', fecha_vac = '$fecha', exp_vac = '$ff' WHERE doc = '$mascota' ");
-        $actu->execute();
+        $actu=$con->prepare("UPDATE mascotas SET vacuna = '$vacuna', enfermero = '$enfermero' WHERE doc = '$mascota' ");
+        $actu->execute();   
         $actualizar=$actu->fetch();
+
+        $ing = $con->prepare("INSERT INTO det_vacuna (id_mascota, id_enfermero, id_vacuna, fecha_vac, exp_vac) VALUES ('$mascota', '$enfermero', '$vacuna', '$fecha', '$ff')");
+        $ing->execute();   
+        $a=$ing->fetch();
 
 
 
@@ -55,9 +60,13 @@ if ((isset($_POST["boton"])) && ($_POST["boton"] == "fo")) {
         
 
     }else{
-        $actua=$con->prepare("UPDATE mascotas SET vacuna = '$vacuna', enfermero = '$enfermero', fecha_vac = '$fecha', exp_vac = '$ff' WHERE doc = '$mascota' ");
+        $actua=$con->prepare("UPDATE mascotas SET vacuna = '$vacuna', enfermero = '$enfermero' WHERE doc = '$mascota' ");
         $actua->execute();
         $actualizar1=$actua->fetch();
+
+        $inge=$con->prepare("INSERT INTO det_vacuna (id_mascota, id_enfermero, id_vacuna, fecha_vac, exp_vac) VALUES '$mascota', '$enfermero','$vacuna', '$fecha','$ff'");
+        $inge->execute();   
+        $b=$inge->fetch();
 
         
 
@@ -112,7 +121,7 @@ if ((isset($_POST["boton"])) && ($_POST["boton"] == "fo")) {
                     <?php
                     do {
                     ?>
-                    <option value="<?php echo ($con_e['nombre']) ?>"> <?php echo ($con_e['nombre']) ?></option> 
+                    <option value="<?php echo ($con_e['doc']) ?>"> <?php echo ($con_e['nombre']) ?></option> 
                     <?php
                     } while ($con_e = $con_enfer->fetch());
                     ?>
@@ -126,7 +135,7 @@ if ((isset($_POST["boton"])) && ($_POST["boton"] == "fo")) {
                     <?php
                     do {
                     ?>
-                    <option value="<?php echo ($con1_e['vacuna']) ?>"><?php echo ($con1_e['vacuna']) ?> </option> 
+                    <option value="<?php echo ($con1_e['id']) ?>"><?php echo ($con1_e['nombre']) ?> </option> 
                     <?php
                     } while ($con1_e = $con1_enfer->fetch());
                     ?>

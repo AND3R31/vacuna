@@ -4,6 +4,11 @@ $daba = new database();
 $con = $daba ->conectar();
 session_start();
 
+
+
+$consultaa=$con->prepare("SELECT * FROM roles");
+    $consultaa->execute();
+    $conn=$consultaa->fetch();
 ?>
 
 <?php
@@ -58,10 +63,9 @@ session_start();
                     <label>Edad </label>
                     <input type="number" id="edad" name="edad" placeholder="Ingrese su Edad" >
                 </div>
-
-                <h2>Crear mascota</h2>              
+              
                 <div>
-                    <label>Seleccione la mascota </label><br>
+                    <label>Seleccione el tipo de rol </label><br>
                     <select name="mas" id="mas">
                     <option>Seleccione la mascota</option>
                     <?php

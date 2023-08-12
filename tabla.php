@@ -4,14 +4,19 @@ $daba = new database();
 $con = $daba ->conectar();
 session_start();
 
-$fecha=date('Y-d-m');
+$fecha=date('Y-m-d');
 
 ?>
 
 <?php
-    $vali=$con->prepare("SELECT * FROM mascotas");
+    $vali=$con->prepare("SELECT * FROM det_vacuna INNER JOIN mascotas ON det_vacuna.id_mascota = mascotas.doc INNER JOIN enfermeros ON det_vacuna.id_enfermero=enfermeros.doc_d INNER JOIN vacunas ON det_vacuna.id_vacuna=vacunas.id");
     $vali->execute();
     $validar=$vali->fetchAll();
+
+    $v=$con->prepare("SELECT * FROM mascotas INNER JOIN enfermeros ON mascotas.dueño = enfermeros.doc_d WHERE 
+    enfermeros.rol=1");
+    $v->execute();
+    $va=$v->fetchAll();
 
 ?>
 
@@ -47,18 +52,19 @@ $fecha=date('Y-d-m');
 
         <?php
         foreach ($validar as $usu) {
+            foreach($va as $a){
             //se abre el ciclo con la llave
         ?>
             <!--El td sirve para sirve para crear las columnas-->
             <!--En cada td se va a mostrar los datos de una tabla usando variables por ejemplo: $variable['nombre del campo de la tabla que queremos que se vea']-->
             <tr>
-                <td><?= $usu['doc'] ?></td>
-                <td><?= $usu['dueño'] ?></td>
-                <td><?= $usu['edad'] ?></td>
+                <td><?= $a['doc_d'] ?></td>
+                <td><?= $a['nombre_d'] ?></td>
+                <td><?= $a['edad'] ?></td>
                 <td><?= $usu['nom_mascota'] ?></td>
                 <td><?= $usu['tipo_masc'] ?></td>
-                <td><?= $usu['enfermero'] ?></td>
-                <td><?= $usu['vacuna'] ?></td>
+                <td><?= $usu['nombre_d'] ?></td>
+                <td><?= $usu['nombre_v'] ?></td>
                 <td><?= $usu['fecha_vac'] ?></td>
                 <td><?= $usu['exp_vac'] ?></td>
                 <?php
@@ -78,6 +84,7 @@ $fecha=date('Y-d-m');
             </tr>
 
         <?php
+        }
         } //se cierra el recorrido cerrando la llave
         ?>
     </table>
