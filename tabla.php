@@ -64,9 +64,6 @@ session_start();
                 <td><?= $usu['exp_vac'] ?></td>
 
                 
-            
-                
-
                 <!--con este metodo GET vamos a poder ver la informacion que estamos enviando-->
             </tr>
 
