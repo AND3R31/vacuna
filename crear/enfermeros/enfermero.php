@@ -3,6 +3,7 @@ require_once("../../base_datos/base_datos.php");
 $daba = new database();
 $con = $daba ->conectar();
 session_start();
+
 ?>
 
 <?php
@@ -11,14 +12,10 @@ session_start();
         $docu=$_POST['doc_enfermero'];
         $name_en=$_POST['n_enfermero'];
         $edad=$_POST['edad'];
-        $vacuna=$_POST['vacuna'];
-        $tip_mascota=$_POST['tip_mascota'];
+        $mas=$_POST['mas'];
 
-        $consu=$con->prepare("SELECT * FROM mascotas WHERE doc = '$docu'");
-        $consu->execute();
-        $res=$consu->fetch();
 
-        if($docu==""||$name_en==""||$edad==""||$vacuna==""||$tip_mascota==""){
+        if($docu==""||$name_en==""||$edad==""||$mas==""){
 
             echo'<script>alert("Existen datos vacios, cambielos")</script>';
             echo'<script>window.location"enfermero.php"</script>';
@@ -26,7 +23,7 @@ session_start();
             echo'<script>alert("Existen datos vacios, cambielos")</script>';
             echo'<script>window.location"enfermero.php"</script>';
         }else{
-            $agre=$con->prepare("INSERT INTO enfermeros (doc, nombre, edad, vacuna, tip_mascota) VALUES ('$docu', '$name_en', '$edad', '$vacuna', '$tip_mascota')");
+            $agre=$con->prepare("INSERT INTO enfermeros (doc, nombre, edad, rol) VALUES ('$docu', '$name_en', '$edad', '$mas')");
             $agre->execute();
 
             echo'<script>alert("datos guardados")</script>';
@@ -62,14 +59,19 @@ session_start();
                     <input type="number" id="edad" name="edad" placeholder="Ingrese su Edad" >
                 </div>
 
+                <h2>Crear mascota</h2>              
                 <div>
-                    <label>Nombre de vacuna</label>
-                    <input type="text" id="vacuna" name="vacuna" placeholder="Ingrese la vacuna a aplicar" >
-                </div>
-
-                <div>
-                    <label>Tipo de mascota</label>
-                    <input type="text" id="tip_mascota" name="tip_mascota">
+                    <label>Seleccione la mascota </label><br>
+                    <select name="mas" id="mas">
+                    <option>Seleccione la mascota</option>
+                    <?php
+                    do {
+                    ?>
+                    <option value="<?php echo ($conn['id']) ?>"> <?php echo ($conn['nombre']) ?> </option> 
+                    <?php
+                    } while ($conn = $consultaa->fetch());
+                    ?>
+                    </select>
                 </div>
 
                 <input type="submit">    

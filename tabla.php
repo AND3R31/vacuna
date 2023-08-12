@@ -4,7 +4,8 @@ $daba = new database();
 $con = $daba ->conectar();
 session_start();
 
-$fecha=date(Y-d-m);
+$fecha=date('Y-d-m');
+
 ?>
 
 <?php
@@ -63,13 +64,11 @@ $fecha=date(Y-d-m);
                 <?php
                     if($fecha > $usu['exp_vac']){
                     ?>    
-                        <td style="background-color=red;"></td>
-
-
+                        <td style="background-color:red;">hola</td>
                     <?php    
                     }else{
                         ?>
-                        <td style="background-color=green;"></td>
+                        <td style="background-color:green;"></td>
                     <?php    
                     }
                 ?>
