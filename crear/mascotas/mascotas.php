@@ -38,7 +38,7 @@ $consultaa=$con->prepare("SELECT * FROM enfermeros Where rol = 1 ");
                     <?php
                     do {
                     ?>
-                    <option value="<?php echo ($conn['doc']) ?>"> <?php echo ($conn['nombre']) ?> </option> 
+                    <option value="<?php echo ($conn['doc_d']) ?>"> <?php echo ($conn['nombre_d']) ?> </option> 
                     <?php
                     } while ($conn = $consultaa->fetch());
                     ?>
@@ -62,7 +62,7 @@ $consultaa=$con->prepare("SELECT * FROM enfermeros Where rol = 1 ");
                     <?php
                     do {
                     ?>
-                    <option value="<?php echo ($con_e['doc']) ?>"> <?php echo ($con_e['nombre']) ?></option> 
+                    <option value="<?php echo ($con_e['doc_d']) ?>"> <?php echo ($con_e['nombre_d']) ?></option> 
                     <?php
                     } while ($con_e = $con_enfer->fetch());
                     ?>
@@ -76,7 +76,7 @@ $consultaa=$con->prepare("SELECT * FROM enfermeros Where rol = 1 ");
                     <?php
                     do {
                     ?>
-                    <option value="<?php echo ($con1_e['id']) ?>"><?php echo ($con1_e['nombre']) ?> </option> 
+                    <option value="<?php echo ($con1_e['id']) ?>"><?php echo ($con1_e['nombre_v']) ?> </option> 
                     <?php
                     } while ($con1_e = $con1_enfer->fetch());
                     ?>

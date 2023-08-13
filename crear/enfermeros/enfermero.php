@@ -9,6 +9,8 @@ session_start();
 $consultaa=$con->prepare("SELECT * FROM roles");
     $consultaa->execute();
     $conn=$consultaa->fetch();
+
+    
 ?>
 
 <?php
@@ -20,15 +22,20 @@ $consultaa=$con->prepare("SELECT * FROM roles");
         $mas=$_POST['mas'];
 
 
+        $caa=$con->prepare("SELECT * FROM enfermeros WHERE doc_d='$docu'");
+        $caa->execute();
+        $res=$caa->fetch();
+
+
         if($docu==""||$name_en==""||$edad==""||$mas==""){
 
             echo'<script>alert("Existen datos vacios, cambielos")</script>';
             echo'<script>window.location"enfermero.php"</script>';
         }else if($res){
-            echo'<script>alert("Existen datos vacios, cambielos")</script>';
+            echo'<script>alert("Existen datos que ya han sido registrados, cambielos")</script>';
             echo'<script>window.location"enfermero.php"</script>';
         }else{
-            $agre=$con->prepare("INSERT INTO enfermeros (doc, nombre, edad, rol) VALUES ('$docu', '$name_en', '$edad', '$mas')");
+            $agre=$con->prepare("INSERT INTO enfermeros (doc_d, nombre_d, edad, rol) VALUES ('$docu', '$name_en', '$edad', '$mas')");
             $agre->execute();
 
             echo'<script>alert("datos guardados")</script>';
@@ -42,21 +49,21 @@ $consultaa=$con->prepare("SELECT * FROM roles");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de enfermeros</title>
+    <title>Registro de usuarios</title>
 </head>
 <body>
     <div>
         <div>
             <form method="POST" id="formu" name="formu">
-                <h2>Crear enfermero</h2>              
+                <h2>Crear usuario</h2>              
                 <div>
-                    <label>Documento del enfermero </label>
-                    <input type="number" id="doc_enfermero" name="doc_enfermero" placeholder="Documento del enfermero" >
+                    <label>Documento del usuario </label>
+                    <input type="number" id="doc_enfermero" name="doc_enfermero" placeholder="Documento del usuario" >
                 </div>
 
                 <div>
                     <label>Nombre del enfermero </label>
-                    <input type="text" id="n_enfermero" name="n_enfermero" placeholder="Nombre del enfermero">
+                    <input type="text" id="n_enfermero" name="n_enfermero" placeholder="Nombre del usuario">
                 </div>
 
                 <div>
@@ -67,7 +74,7 @@ $consultaa=$con->prepare("SELECT * FROM roles");
                 <div>
                     <label>Seleccione el tipo de rol </label><br>
                     <select name="mas" id="mas">
-                    <option>Seleccione la mascota</option>
+                    <option>Seleccione el rol</option>
                     <?php
                     do {
                     ?>
